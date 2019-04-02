@@ -5,6 +5,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.wallet.entity.Transaction;
+import com.wallet.entity.Users;
+import com.wallet.entity.Wallet;
 
 @JsonInclude(Include.NON_NULL)
 public class Response {
@@ -13,6 +15,9 @@ public class Response {
 	private String message;
 	private String accessToken;
 	private List<Transaction> transactions;
+	private Error error;
+	private Wallet wallet;
+	private Users users;
 
 	public String getStatus() {
 		return status;
@@ -44,6 +49,30 @@ public class Response {
 
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
+	}
+
+	public Error getError() {
+		return error;
+	}
+
+	public void setError(Error error) {
+		this.error = error;
+	}
+
+	public Wallet getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
+	}
+
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
 	}
 	
 }

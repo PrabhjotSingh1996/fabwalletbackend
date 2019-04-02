@@ -7,6 +7,7 @@ import com.wallet.commons.Constants;
 import com.wallet.commons.ValidateUtils;
 import com.wallet.dao.TransactionDao;
 import com.wallet.model.ApplicationException;
+import com.wallet.model.Error;
 import com.wallet.model.Request;
 import com.wallet.model.Response;
 import com.wallet.service.TransactionService;
@@ -28,11 +29,11 @@ public class TransactionServiceImpl implements TransactionService {
 			response.setTransactions(transactionDao.findByMsisdn(request.getMsisdn()));
 			response.setStatus(Constants.SUCCESS_STATUS);
 		} catch (ApplicationException ae) {
-			response.setStatus(ae.getStatus());
-			response.setMessage(ae.getMessage());
+			response.setStatus(Constants.FAIL_STATUS);
+			response.setError(new Error(ae.getStatus(), ae.getMessage()));
 		} catch (Exception exception) {
-			response.setStatus(Constants.PROBLEM_IN_APPLICATION);
-			response.setMessage(exception.getMessage());
+			response.setStatus(Constants.FAIL_STATUS);
+			response.setError(new Error(Constants.PROBLEM_IN_APPLICATION, exception.getMessage()));
 		}
 		return response;
 	}

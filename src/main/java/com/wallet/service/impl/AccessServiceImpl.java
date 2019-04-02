@@ -14,6 +14,7 @@ import com.wallet.entity.Token;
 import com.wallet.entity.Users;
 import com.wallet.entity.Wallet;
 import com.wallet.model.ApplicationException;
+import com.wallet.model.Error;
 import com.wallet.model.Request;
 import com.wallet.model.Response;
 import com.wallet.service.AccessService;
@@ -53,11 +54,11 @@ public class AccessServiceImpl implements AccessService {
 			response.setStatus(Constants.SUCCESS_STATUS);
 			response.setMessage("Welcome to fab wallet.Please login to get access token");
 		} catch (ApplicationException ae) {
-			response.setStatus(ae.getStatus());
-			response.setMessage(ae.getMessage());
+			response.setStatus(Constants.FAIL_STATUS);
+			response.setError(new Error(ae.getStatus(), ae.getMessage()));
 		} catch (Exception exception) {
-			response.setStatus(Constants.PROBLEM_IN_APPLICATION);
-			response.setMessage(exception.getMessage());
+			response.setStatus(Constants.FAIL_STATUS);
+			response.setError(new Error(Constants.PROBLEM_IN_APPLICATION, exception.getMessage()));
 		}
 		return response;
 	}
@@ -84,11 +85,11 @@ public class AccessServiceImpl implements AccessService {
 			response.setMessage("Login Successfull");
 			response.setAccessToken(token.getAccessToken());
 		} catch (ApplicationException ae) {
-			response.setStatus(ae.getStatus());
-			response.setMessage(ae.getMessage());
+			response.setStatus(Constants.FAIL_STATUS);
+			response.setError(new Error(ae.getStatus(), ae.getMessage()));
 		} catch (Exception exception) {
-			response.setStatus(Constants.PROBLEM_IN_APPLICATION);
-			response.setMessage(exception.getMessage());
+			response.setStatus(Constants.FAIL_STATUS);
+			response.setError(new Error(Constants.PROBLEM_IN_APPLICATION, exception.getMessage()));
 		}
 		return response;
 	}
@@ -106,8 +107,8 @@ public class AccessServiceImpl implements AccessService {
 			token.setActive(false);
 			tokenDao.save(token);
 		} catch (Exception exception) {
-			response.setStatus(Constants.PROBLEM_IN_APPLICATION);
-			response.setMessage(exception.getMessage());
+			response.setStatus(Constants.FAIL_STATUS);
+			response.setError(new Error(Constants.PROBLEM_IN_APPLICATION, exception.getMessage()));
 		}
 		return response;
 	}
